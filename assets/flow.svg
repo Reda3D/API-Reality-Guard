@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 270" width="1040" height="270" role="img" aria-label="Flow: claim, resolve the version, check evidence, then verify the contract and implement, or stop at NOT VERIFIED">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 270" width="1050" height="270" role="img" aria-label="Flow: claim, resolve the version, check evidence, then verify the contract and implement, or stop at NOT VERIFIED">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M 0 1 L 8 5 L 0 9" fill="none" stroke="#64748B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
   </defs>
 
-  <rect x="0.5" y="0.5" width="1039" height="269" rx="14" fill="#0B1220" stroke="#1E293B" stroke-width="1"/>
+  <rect x="0.5" y="0.5" width="1049" height="269" rx="14" fill="#0B1220" stroke="#1E293B" stroke-width="1"/>
 
-  <g font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" text-anchor="middle">
+  <g font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" text-anchor="middle">
     <rect x="24" y="64" width="110" height="52" rx="8" fill="#111C2E" stroke="#334155" stroke-width="1"/>
     <text x="79" y="95" fill="#E2E8F0">Claim</text>
 
@@ -23,8 +23,8 @@
     <rect x="715" y="64" width="160" height="52" rx="8" fill="#111C2E" stroke="#334155" stroke-width="1"/>
     <text x="795" y="95" fill="#E2E8F0">Gate 4 · implement</text>
 
-    <rect x="900" y="64" width="115" height="52" rx="8" fill="#111C2E" stroke="#334155" stroke-width="1"/>
-    <text x="957" y="95" fill="#E2E8F0">Gate 5 · audit</text>
+    <rect x="900" y="64" width="125" height="52" rx="8" fill="#111C2E" stroke="#334155" stroke-width="1"/>
+    <text x="962" y="95" fill="#E2E8F0">Gate 5 · audit</text>
 
     <rect x="340" y="176" width="150" height="52" rx="8" fill="#1A1015" stroke="#7F1D1D" stroke-width="1.5"/>
     <text x="415" y="207" fill="#FCA5A5">NOT VERIFIED</text>
