@@ -20,7 +20,7 @@ result. Every claim below corresponds to a command that can be re-run.
 | Declared vs resolved distinction | PASS | Windows |
 | Over-long folded description rejected | PASS — exit 1 | Windows |
 | No regex frontmatter parsing | PASS — grep finds nothing | Windows |
-| Continuous integration | Configured | GitHub Actions, not yet executed at the time of writing |
+| Continuous integration | PASS — 11/11 jobs | GitHub Actions, 2026-10-29 |
 
 The skips are environmental, not failures:
 
@@ -138,12 +138,13 @@ marketing document.
 2. **No real third-party API was verified.** The protocol was exercised on
    synthetic fixtures. Whether an agent follows it on a real integration is a
    behavioural question that requires an evaluation set, not a unit test.
-3. **CI had not run at the time of writing.** The workflow is committed; its first
-   results will appear in the Actions tab. Local runs on Windows are the evidence
-   behind every number above.
+3. **CI ran after the local measurements.** The first pipeline was green on
+   Linux, macOS and Windows across Python 3.9, 3.11 and 3.13, including the
+   authoritative PyYAML job, the regression guards and the resolution fixture.
+   The numbers in section 2 remain the local Windows figures, not CI figures.
 4. **Python 3.9 and 3.11 were not exercised locally.** Only 3.13 was available on
-   this machine. The code avoids version-specific syntax and the CI matrix covers
-   the range, but that is a design argument, not a measurement.
+   this machine. CI covers 3.9 and 3.11 on all three platforms; that is the
+   evidence for those versions, not a local measurement.
 5. **`best_effort` parsers are best effort.** `yarn.lock`, `pnpm-lock.yaml`,
    `Gemfile.lock`, `pubspec.lock` and TOML lockfiles on Python below 3.11 are read by
    line scanners. They are labelled, and the skill instructs the agent to confirm
