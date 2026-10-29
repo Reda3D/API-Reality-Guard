@@ -20,6 +20,7 @@ result. Every claim below corresponds to a command that can be re-run.
 | Declared vs resolved distinction | PASS | Windows |
 | Over-long folded description rejected | PASS — exit 1 | Windows |
 | No regex frontmatter parsing | PASS — grep finds nothing | Windows |
+| README demo reproducibility | PASS — fixture resolves as documented | Windows |
 | Continuous integration | PASS — 11/11 jobs | GitHub Actions, 2026-10-29 |
 
 The skips are environmental, not failures:

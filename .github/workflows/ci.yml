@@ -160,3 +160,42 @@ jobs:
           assert requests["version"] is None, requests
           print("OK: declared and resolved are distinguished")
           PY
+
+  demo:
+    name: README demo is reproducible
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      # The README quotes this output verbatim. If the fixture or the parser
+      # drifts, the documentation becomes a lie -- so the documentation is
+      # tested like code.
+      - name: Fixture resolves exactly as documented
+        run: |
+          python scripts/inspect_project.py examples/sample-project \
+            --package lodash --package express --package requests \
+            --json > "$RUNNER_TEMP/demo.json"
+          python - <<'PY'
+          import json, os
+          path = os.path.join(os.environ["RUNNER_TEMP"], "demo.json")
+          data = json.load(open(path, encoding="utf-8"))
+
+          got = {(r["package"], r["authority"], r["version"] or r["constraint"])
+                 for r in data["resolution"]}
+          expected = {
+              ("lodash",   "resolved", "4.17.21"),
+              ("lodash",   "declared", "^4.17.0"),
+              ("express",  "resolved", "4.18.2"),
+              ("express",  "declared", "~4.18.0"),
+              ("requests", "declared", ">=2.31,<3"),
+          }
+          assert got == expected, "resolution drifted: {}".format(got ^ expected)
+          assert data["files_scanned"] == 4, data["files_scanned"]
+          assert data["scan_complete"] is True
+          print("OK: demo output matches the README")
+          PY

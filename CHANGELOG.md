@@ -4,6 +4,21 @@ All notable changes to this package are documented here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Documentation
+
+- README rebuilt as a landing page: banner, status badges, an architecture
+  diagram, a reproducible demo against `examples/sample-project`, the
+  declared-versus-resolved table, and an explicit security-model table.
+- Added `SECURITY.md` with the guarantees that count as in-scope violations.
+- Added `CONTRIBUTING.md`, including the rules for adding a lockfile format.
+- Added `examples/sample-project`, a fixture that contains both a manifest and a
+  lockfile for the same dependency, so the demo output can be reproduced exactly
+  instead of illustrated.
+
+No behavioural change. No version bump.
+
 ## [1.0.0] — 2026-10-29
 
 First release after a full audit of the 0.1.0 package. The audit is published in

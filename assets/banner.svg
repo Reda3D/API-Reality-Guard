@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 240" width="1200" height="240" role="img" aria-label="API Reality Guard — declared is not resolved">
+  <rect x="0.5" y="0.5" width="1199" height="239" rx="14" fill="#0B1220" stroke="#1E293B" stroke-width="1"/>
+
+  <circle cx="104" cy="112" r="33" fill="none" stroke="#3B82F6" stroke-width="3"/>
+  <path d="M 88 112 L 99 124 L 121 99" fill="none" stroke="#38BDF8" stroke-width="5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="164" y="106" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="38" font-weight="700" fill="#F8FAFC">API Reality Guard</text>
+  <text x="166" y="139" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="19" fill="#94A3B8">Declared is not resolved.</text>
+  <text x="166" y="176" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="12" letter-spacing="1.4" fill="#64748B">AGENT SKILL · CLAUDE CODE · AGENTSKILLS.IO · MIT</text>
+
+  <rect x="806" y="68" width="328" height="104" rx="10" fill="#0F1A2E" stroke="#1E293B" stroke-width="1"/>
+
+  <text x="830" y="97" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="13" fill="#94A3B8">lodash</text>
+  <text x="906" y="97" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="13" fill="#64748B">^4.17.0</text>
+
+  <text x="830" y="121" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="13" fill="#475569">resolved</text>
+  <text x="906" y="121" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="13" fill="#38BDF8">4.17.21</text>
+
+  <line x1="830" y1="134" x2="1110" y2="134" stroke="#1E293B" stroke-width="1"/>
+
+  <text x="830" y="155" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="10.5" fill="#475569">a range is a request, not a fact</text>
+</svg>
