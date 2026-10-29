@@ -1,0 +1,162 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: ${{ matrix.os }} / py${{ matrix.python }} (no PyYAML)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.9", "3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+
+      # No dependencies are installed on purpose: this is the path a user with a
+      # bare interpreter gets, and it must work.
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Validator (fallback parser)
+        run: python scripts/validate_skill.py .
+
+      - name: Inventory contract
+        run: python scripts/inspect_project.py . --json
+
+  tests-with-pyyaml:
+    name: Authoritative YAML path
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: python -m pip install --upgrade pip pyyaml
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Validator must report the pyyaml parser
+        run: |
+          python scripts/validate_skill.py . --json > "$RUNNER_TEMP/result.json"
+          python - <<'PY'
+          import json, os
+          data = json.load(open(os.path.join(os.environ["RUNNER_TEMP"], "result.json"), encoding="utf-8"))
+          assert data["compliant"] is True, data["errors"]
+          assert data["frontmatter_parser"] == "pyyaml", data["frontmatter_parser"]
+          print("frontmatter parsed with pyyaml")
+          PY
+
+  regression-guards:
+    name: Regression guards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      # The defect that motivated 1.0.0. If this pattern ever comes back, fail.
+      - name: No regular-expression frontmatter parsing
+        run: |
+          if grep -rnE "re\.(search|match|compile)\([^)]*description" scripts/ ; then
+            echo "::error::regex-based frontmatter parsing detected; use load_frontmatter()"
+            exit 1
+          fi
+          echo "OK: no regex frontmatter parser"
+
+      # A folded description of 2000 characters must be rejected, not approved.
+      - name: Folded description over the limit is rejected
+        run: |
+          mkdir -p /tmp/fixture/api-reality-guard/{scripts,references}
+          cp scripts/inspect_project.py /tmp/fixture/api-reality-guard/scripts/
+          cp scripts/validate_skill.py /tmp/fixture/api-reality-guard/scripts/
+          touch /tmp/fixture/api-reality-guard/references/verification-protocol.md
+          python - <<'PY'
+          from pathlib import Path
+          body = "A" * 2000
+          Path("/tmp/fixture/api-reality-guard/SKILL.md").write_text(
+              "---\nname: api-reality-guard\ndescription: >\n  " + body + "\n---\n\n# Body\n",
+              encoding="utf-8",
+          )
+          PY
+          set +e
+          python scripts/validate_skill.py /tmp/fixture/api-reality-guard
+          code=$?
+          set -e
+          test "${code}" -eq 1
+          echo "OK: over-long folded description rejected"
+
+      - name: Reports are deterministic
+        run: |
+          python scripts/inspect_project.py . --json > "$RUNNER_TEMP/a.json"
+          python scripts/inspect_project.py . --json > "$RUNNER_TEMP/b.json"
+          cmp "$RUNNER_TEMP/a.json" "$RUNNER_TEMP/b.json"
+          echo "OK: byte-identical"
+
+  resolution:
+    name: Version resolution against real lockfiles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Build a fixture project with a lockfile
+        run: |
+          mkdir -p /tmp/proj
+          cat > /tmp/proj/package.json <<'JSON'
+          {"dependencies": {"lodash": "^4.17.0"}}
+          JSON
+          cat > /tmp/proj/package-lock.json <<'JSON'
+          {"lockfileVersion": 3, "packages": {"node_modules/lodash": {"version": "4.17.21"}}}
+          JSON
+          printf 'Flask==3.0.0\nrequests>=2.0\n' > /tmp/proj/requirements.txt
+
+      - name: Resolved and declared are distinguished
+        run: |
+          python scripts/inspect_project.py /tmp/proj --package lodash --package flask --package requests --json > "$RUNNER_TEMP/out.json"
+          python - <<'PY'
+          import json, os
+          data = json.load(open(os.path.join(os.environ["RUNNER_TEMP"], "out.json"), encoding="utf-8"))
+          by_name = {}
+          for record in data["resolution"]:
+              by_name.setdefault(record["package"].lower(), []).append(record)
+
+          lodash = by_name["lodash"][0]
+          assert lodash["authority"] == "resolved", lodash
+          assert lodash["version"] == "4.17.21", lodash
+          assert lodash["confidence"] == "exact", lodash
+
+          flask = by_name["flask"][0]
+          assert flask["authority"] == "resolved", flask
+          assert flask["version"] == "3.0.0", flask
+
+          requests = by_name["requests"][0]
+          assert requests["authority"] == "declared", requests
+          assert requests["version"] is None, requests
+          print("OK: declared and resolved are distinguished")
+          PY
