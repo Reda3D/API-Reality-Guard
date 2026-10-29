@@ -34,15 +34,9 @@ that applies to *that* version, and label every claim with what was checked.
 
 ## How it works
 
-```mermaid
-flowchart LR
-    A[Claim to verify] --> B[Gate 1 - resolve version]
-    B --> C{Evidence for this version}
-    C -->|yes| D[Gate 3 - verify contract]
-    C -->|no| E[NOT VERIFIED]
-    D --> F[Gate 4 - implement]
-    F --> G[Gate 5 - validate]
-```
+<p align="center">
+  <img src="assets/flow.svg" alt="Flow: claim, resolve the version, check evidence, then verify the contract and implement, or stop at NOT VERIFIED" width="900">
+</p>
 
 Six gates, ten non-negotiable rules, five evidence labels. The procedure is in
 [`SKILL.md`](SKILL.md); the depth is in
@@ -222,7 +216,9 @@ api-reality-guard/
 │   └── validate_skill.py         # agentskills.io conformance
 ├── tests/                        # 58 tests, stdlib unittest, no fixtures on disk
 ├── examples/sample-project/      # reproducible demo fixture
-├── assets/banner.svg
+├── assets/
+│   ├── banner.svg
+│   └── flow.svg
 ├── VALIDATION_REPORT.md          # what was run, and what was not
 ├── CHANGELOG.md
 ├── SECURITY.md

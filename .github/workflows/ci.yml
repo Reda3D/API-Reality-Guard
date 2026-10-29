@@ -107,6 +107,18 @@ jobs:
           test "${code}" -eq 1
           echo "OK: over-long folded description rejected"
 
+      # A malformed SVG renders as a broken image in the README, which is the
+      # first thing a visitor sees. Parse it instead of trusting it.
+      - name: SVG assets are well-formed
+        run: |
+          python - <<'PY'
+          import glob
+          import xml.dom.minidom
+          for path in sorted(glob.glob("assets/*.svg")):
+              xml.dom.minidom.parse(path)
+              print("OK:", path)
+          PY
+
       - name: Reports are deterministic
         run: |
           python scripts/inspect_project.py . --json > "$RUNNER_TEMP/a.json"
