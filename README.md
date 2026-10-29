@@ -235,7 +235,7 @@ api-reality-guard/
 |---|---|
 | Tests | 58 passing, both frontmatter parser paths |
 | Conformance | `agentskills.io` compliant, name and description within bounds |
-| CI | Linux, macOS, Windows × Python 3.9, 3.11, 3.13 |
+| CI | 13 jobs green: Linux, macOS, Windows × Python 3.9, 3.11, 3.13 |
 | Regression guards | Over-long folded description rejected; no regex YAML parsing |
 | Host installation | **Not verified.** The package has not been installed into a live workspace |
 
