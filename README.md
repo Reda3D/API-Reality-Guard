@@ -3,12 +3,12 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Reda3D/api-reality-guard/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Reda3D/api-reality-guard/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/Reda3D/API-Reality-Guard/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Reda3D/API-Reality-Guard/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg">
   <img alt="Python 3.9+" src="https://img.shields.io/badge/python-3.9%2B-3776AB.svg">
   <img alt="Runtime dependencies: none" src="https://img.shields.io/badge/runtime%20deps-none-brightgreen.svg">
   <img alt="agentskills.io compliant" src="https://img.shields.io/badge/agentskills.io-compliant-7C3AED.svg">
-  <a href="https://github.com/Reda3D/api-reality-guard/releases"><img alt="Release" src="https://img.shields.io/github/v/release/Reda3D/api-reality-guard"></a>
+  <a href="https://github.com/Reda3D/API-Reality-Guard/releases"><img alt="Release" src="https://img.shields.io/github/v/release/Reda3D/API-Reality-Guard"></a>
 </p>
 
 <p align="center">
@@ -45,7 +45,7 @@ Six gates, ten non-negotiable rules, five evidence labels. The procedure is in
 ## Quick start
 
 ```bash
-git clone https://github.com/Reda3D/api-reality-guard.git
+git clone https://github.com/Reda3D/API-Reality-Guard.git
 cd api-reality-guard
 
 # 1. Check the package against the standard (no dependencies needed)

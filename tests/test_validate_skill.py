@@ -119,6 +119,16 @@ class ValidationTests(unittest.TestCase):
             errors, _, _ = validate(root)
             self.assertTrue(any("does not match the directory name" in e for e in errors))
 
+    def test_accepts_a_case_only_directory_difference(self) -> None:
+        """Cloning a repo named API-Reality-Guard yields a mixed-case directory."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = build_skill(
+                Path(temp_dir) / "API-Reality-Guard",
+                "name: api-reality-guard\ndescription: Valid description.\n",
+            )
+            errors, _, _ = validate(root)
+            self.assertEqual(errors, [])
+
     def test_detects_non_kebab_name(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = build_skill(

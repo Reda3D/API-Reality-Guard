@@ -256,7 +256,12 @@ def validate(skill_root: Path) -> Tuple[List[str], List[str], str]:
             )
         if not (1 <= len(name) <= NAME_MAX):
             errors.append("name length {} is outside 1..{}".format(len(name), NAME_MAX))
-        if name != skill_root.name:
+        if name != skill_root.name and name.lower() != skill_root.name.lower():
+            # A case-only difference is accepted. GitHub preserves the casing of
+            # a repository name, so cloning API-Reality-Guard produces a
+            # directory that differs from the skill name only by case. The
+            # identity of a skill is its name; case is a hosting artifact. A
+            # genuinely different name is still an error.
             errors.append(
                 "name {!r} does not match the directory name {!r}".format(name, skill_root.name)
             )

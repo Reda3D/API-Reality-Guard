@@ -90,4 +90,4 @@ evidence are the product. They were preserved.
 Initial package: `SKILL.md` workflow, verification protocol, read-only filename
 inventory, structural validator, six tests.
 
-[1.0.0]: https://github.com/Reda3D/api-reality-guard/releases/tag/v1.0.0
+[1.0.0]: https://github.com/Reda3D/API-Reality-Guard/releases/tag/v1.0.0

@@ -5,7 +5,7 @@
 No dependency is required to work on this repository.
 
 ```bash
-git clone https://github.com/Reda3D/api-reality-guard.git
+git clone https://github.com/Reda3D/API-Reality-Guard.git
 cd api-reality-guard
 python -m unittest discover -s tests -v
 python scripts/validate_skill.py .
