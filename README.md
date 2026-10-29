@@ -36,12 +36,12 @@ that applies to *that* version, and label every claim with what was checked.
 
 ```mermaid
 flowchart LR
-    A["Claim<br/>does method X accept Y?"] --> B["Gate 1<br/>resolve the version"]
-    B --> C{"Evidence for<br/>this version?"}
-    C -- yes --> D["Gate 3<br/>verify the contract"]
-    C -- no --> E["NOT VERIFIED<br/>say so, do not guess"]
-    D --> F["Gate 4<br/>implement"]
-    F --> G["Gate 5<br/>validate and audit"]
+    A[Claim to verify] --> B[Gate 1 - resolve version]
+    B --> C{Evidence for this version}
+    C -->|yes| D[Gate 3 - verify contract]
+    C -->|no| E[NOT VERIFIED]
+    D --> F[Gate 4 - implement]
+    F --> G[Gate 5 - validate]
 ```
 
 Six gates, ten non-negotiable rules, five evidence labels. The procedure is in
